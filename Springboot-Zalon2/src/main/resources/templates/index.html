@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/default.css">
+   
+</head>
+<body class="center">
+  <h1>[ 메인 페이지 ]</h1>
+  
+  
+  <div th:unless="${session.loginMember}">
+	  <input type="button" value="회원가입" onclick="location.href='/member/join'" >
+	  <input type="button" value="로그인" onclick="location.href='/member/login'" >
+  </div>
+  
+  <div th:if="${session.loginMember}">
+	  <input type="button" value="게시판" onclick="location.href='/board/list'" >
+	  <input type="button" value="로그아웃" onclick="location.href='/member/logout'" >
+  </div>
+</body>
+</html>

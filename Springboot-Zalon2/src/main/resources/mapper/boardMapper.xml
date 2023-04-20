@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.board.repository.BoardMapper">
+	
+	 <select id="findAllBoards" resultType="board">
+	 	select * from board
+	 </select>
+	 
+	 
+	 <select id="findBoard" resultType="board">
+	 	select * from board where board_id=#{board_id}
+	 </select>
+	 
+	 <insert id="saveBoard">
+	 	<selectKey keyProperty="board_id" resultType="long" order="BEFORE">
+			select seq_board.nextval from dual
+		</selectKey>
+	 	insert into board(
+	 		board_id,
+	 		title,
+	 		contents,
+	 		member_id
+	 	
+	 	)values(
+	 		#{board_id},
+	 		#{title},
+	 		#{contents},
+	 		#{member_id}
+	 	)
+	 </insert>
+	 
+	 <update id="updateHit">
+	 	update  board
+	 		set hit = hit+1
+	 		where board_id=#{board_id}
+	 </update>
+	 
+	 
+	  <update id="updateBoard">
+	 	update  board
+	 		set 
+	 		title= #{title},
+	 		contents= #{contents}
+	 		where board_id=#{board_id}
+	 </update>
+	 
+	 
+	 <delete id="removeBoard">
+	 	delete board
+	 		where board_id=#{board_id}
+	 </delete>
+	 
+	 
+	 <insert id="saveFile">
+	 	  <selectKey keyProperty="attachedFile_id" resultType="long" order="BEFORE">
+            select seq_board.nextval from dual
+      	  </selectKey>
+        
+	 	 insert into attached_file (
+            attachedFile_id,
+            board_id,
+            original_filename,
+            saved_filename,
+            file_size
+        ) values (
+            #{attachedFile_id},
+            #{board_id},
+            #{original_filename},
+            #{saved_filename},
+            #{file_size}
+        )
+	 </insert>
+	 
+	  <select id="findFile" resultType="AttachedFile">
+	 	select * from attached_file where board_id=#{board_id}
+	 </select>
+	
+	
+	  <select id="findFileByAttachedFileId" resultType="AttachedFile">
+        select * from attached_file where attachedFile_id = #{attachedFile_id}
+    </select>
+	
+	
+	
+</mapper>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/default.css">
+<style>
+	
+	.error{
+	 color: #FF0000;
+	}
+	
+	
+</style>
+</head>
+<body>
+
+<div id="container">
+	<h1>[로그인]</h1>
+	<form action="" method="post" th:object="${loginForm}" >
+	<div th:if="${errMsg}" th:text="${errMsg}"></div>
+	
+	<div th:if="${#fields.hasGlobalErrors()}">
+		<p class="error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p> <!-- 여러 에러가 있을 수 있으므로 반복문실행 -->
+	</div>
+	<table >
+		<tr>
+			<th>아이디</th>
+			<td>
+				<input type="text" th:field="*{member_id}">
+				<div th:errorClass= "error" th:errors="*{member_id}"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>패스워드</th>
+			<td>
+				<input type="password" th:field="*{password}">
+				<div class = "error" th:errors="*{password}"></div>
+			</td>
+		</tr>
+	</table>
+		<p>
+	<div class="center">
+		<input type="button" onclick="location.href='/'" value="메인으로">
+		<input type="submit" value="로그인">
+		<input type="reset" value="다시작성">
+	</div>	
+	</form>
+
+</div>
+
+</body>
+</html>

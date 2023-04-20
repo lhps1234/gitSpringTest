@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 읽기</title>
+    <link rel="stylesheet" href="/default.css">
+</head>
+<body>
+<div id="container">
+  <h1>[ 게시판 - 글 읽기 ]</h1>
+  <form th:action="@{/board/delete(id=${board.board_id})}" enctype="multipart/form-data" method="post" >
+    <table th:object="${board}">
+      <tr>
+        <th>제목</th>
+        <td th:text="*{title}"></td>
+      </tr>
+      <tr>
+        <th>내용</th>
+        <td th:text="*{contents}"></td>
+      </tr>
+      <tr>
+        <th>조회수</th>
+        <td th:text="*{hit}"></td>
+      </tr>
+      <tr>
+        <th>작성일</th>
+        <td th:text="*{created_time}"></td>
+      </tr>
+      <tr>
+        <th>작성자</th>
+        <td th:text="*{member_id}"></td>
+      </tr>
+      
+      <tr>
+        <th>첨부 파일</th>
+        <td >
+        	<a th:if="${file}" th:href="@{/board/download/{id}(id=${file.attachedFile_id})}" th:text="${file.original_filename}"></a>
+        </td>
+      </tr>
+      
+    </table>
+    <p>
+  
+	   <div th:if="${session.loginMember.member_id==board.member_id}" class="center">
+	     <input type="button" onclick="location.href='/board/list'" value="목록으로">
+	     <input type="button" th:onclick="|location.href='@{/board/update(id=${board.board_id})}'|" value="수정하기">
+	     <input type="submit" value="삭제하기">
+	 	</div>
+  	
+  	
+	   <div th:unless="${session.loginMember.member_id==board.member_id}" class="center">
+	     <input type="button" onclick="location.href='/board/list'" value="목록으로">
+	     
+	 	</div>
+  	
+  	
+  	
+  </form>
+</div>
+</body>
+</html>
